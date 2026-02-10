@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC Dashboard - Hệ thống Quản lý Sự cố An ninh Mạng</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="#1890FF"/>
+                    <path d="M16 8L22 12V20L16 24L10 20V12L16 8Z" stroke="white" stroke-width="2" fill="none"/>
+                    <circle cx="16" cy="16" r="3" fill="white"/>
+                </svg>
+                <h1>SOC Dashboard</h1>
+            </div>
+        </div>
+        <div class="header-center">
+            <nav class="main-nav">
+                <button class="nav-btn active" data-view="monitoring">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 10h3l2-6 4 12 2-6h3"/>
+                    </svg>
+                    Giám sát
+                </button>
+                <button class="nav-btn" data-view="incidents">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" fill="none"/>
+                        <line x1="3" y1="8" x2="17" y2="8" stroke="currentColor"/>
+                    </svg>
+                    Sự cố
+                </button>
+                <button class="nav-btn" data-view="policies">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <rect x="4" y="4" width="12" height="12" rx="1" stroke="currentColor" fill="none"/>
+                        <line x1="7" y1="8" x2="13" y2="8" stroke="currentColor"/>
+                        <line x1="7" y1="12" x2="13" y2="12" stroke="currentColor"/>
+                    </svg>
+                    Chính sách
+                </button>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="system-status">
+                <span class="status-dot status-safe"></span>
+                <span class="status-text">Hệ thống an toàn</span>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar">AD</div>
+                <span class="user-name">Admin</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Monitoring View -->
+        <section class="view-section active" id="monitoring-view">
+            <div class="hybrid-layout">
+                <!-- Left Panel: Monitoring Charts -->
+                <div class="monitoring-panel">
+                    <div class="panel-header">
+                        <h2>Dashboard Giám sát</h2>
+                        <div class="time-selector">
+                            <button class="time-btn active">Thời gian thực</button>
+                            <button class="time-btn">1H</button>
+                            <button class="time-btn">24H</button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon stat-icon-danger">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Tấn công đang diễn ra</div>
+                                <div class="stat-value stat-value-danger">3</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon stat-icon-warning">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Cảnh báo cao</div>
+                                <div class="stat-value stat-value-warning">12</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon stat-icon-info">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Lưu lượng trung bình</div>
+                                <div class="stat-value">1.2 Gbps</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon stat-icon-success">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Đã xử lý hôm nay</div>
+                                <div class="stat-value stat-value-success">47</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Graph -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Lưu lượng mạng</h3>
+                            <div class="chart-legend">
+                                <span class="legend-item">
+                                    <span class="legend-color" style="background: #52C41A;"></span>
+                                    Lưu lượng bình thường
+                                </span>
+                                <span class="legend-item">
+                                    <span class="legend-color" style="background: #FF4D4F;"></span>
+                                    Tấn công phát hiện
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-canvas" id="traffic-chart">
+                            <canvas id="trafficCanvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- System Health -->
+                    <div class="system-health-grid">
+                        <div class="health-card">
+                            <h3>CPU Usage</h3>
+                            <div class="gauge-container">
+                                <svg class="gauge" viewBox="0 0 200 120">
+                                    <path class="gauge-bg" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#2A2A3C" stroke-width="20"/>
+                                    <path class="gauge-fill gauge-fill-success" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#52C41A" stroke-width="20" stroke-dasharray="251.2" stroke-dashoffset="188.4"/>
+                                    <text x="100" y="85" class="gauge-value">45%</text>
+                                    <text x="100" y="105" class="gauge-label">Normal</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="health-card">
+                            <h3>RAM Usage</h3>
+                            <div class="gauge-container">
+                                <svg class="gauge" viewBox="0 0 200 120">
+                                    <path class="gauge-bg" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#2A2A3C" stroke-width="20"/>
+                                    <path class="gauge-fill gauge-fill-warning" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#FAAD14" stroke-width="20" stroke-dasharray="251.2" stroke-dashoffset="100.5"/>
+                                    <text x="100" y="85" class="gauge-value">68%</text>
+                                    <text x="100" y="105" class="gauge-label">Elevated</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="health-card">
+                            <h3>Network Load</h3>
+                            <div class="gauge-container">
+                                <svg class="gauge" viewBox="0 0 200 120">
+                                    <path class="gauge-bg" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#2A2A3C" stroke-width="20"/>
+                                    <path class="gauge-fill gauge-fill-danger" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#FF4D4F" stroke-width="20" stroke-dasharray="251.2" stroke-dashoffset="50.2"/>
+                                    <text x="100" y="85" class="gauge-value">82%</text>
+                                    <text x="100" y="105" class="gauge-label">Critical</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Threat Map -->
+                    <div class="threat-map-container">
+                        <h3>Bản đồ mối đe dọa</h3>
+                        <div class="threat-map">
+                            <div class="map-placeholder">
+                                <div class="threat-marker" style="top: 30%; left: 75%;" data-country="CN">
+                                    <div class="pulse"></div>
+                                    <div class="marker-label">China (15)</div>
+                                </div>
+                                <div class="threat-marker" style="top: 45%; left: 15%;" data-country="US">
+                                    <div class="pulse"></div>
+                                    <div class="marker-label">USA (8)</div>
+                                </div>
+                                <div class="threat-marker" style="top: 35%; left: 45%;" data-country="RU">
+                                    <div class="pulse"></div>
+                                    <div class="marker-label">Russia (12)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Quick Alerts -->
+                <div class="alerts-panel">
+                    <div class="panel-header">
+                        <h2>Cảnh báo mới nhất</h2>
+                        <button class="btn-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 3v14M3 10h14"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="alerts-list">
+                        <div class="alert-card alert-critical">
+                            <div class="alert-header">
+                                <span class="alert-priority">P1</span>
+                                <span class="alert-type">SYN Flood</span>
+                                <span class="alert-time">2 phút trước</span>
+                            </div>
+                            <div class="alert-title">Phát hiện tấn công DDoS từ nhiều nguồn</div>
+                            <div class="alert-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Source IP:</span>
+                                    <span class="detail-value monospace">203.162.10.xxx</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Target Port:</span>
+                                    <span class="detail-value monospace">80, 443</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">AI Confidence:</span>
+                                    <span class="detail-value">98%</span>
+                                </div>
+                            </div>
+                            <div class="alert-actions">
+                                <button class="btn btn-danger btn-sm">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 1L1 5v6c0 4.4 3.1 8.5 7 9.5 3.9-1 7-5.1 7-9.5V5l-7-4z"/>
+                                    </svg>
+                                    Block IP
+                                </button>
+                                <button class="btn btn-secondary btn-sm">Tạo Ticket</button>
+                            </div>
+                        </div>
+
+                        <div class="alert-card alert-high">
+                            <div class="alert-header">
+                                <span class="alert-priority">P2</span>
+                                <span class="alert-type">UDP Flood</span>
+                                <span class="alert-time">15 phút trước</span>
+                            </div>
+                            <div class="alert-title">Tăng đột biến UDP traffic</div>
+                            <div class="alert-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Source IP:</span>
+                                    <span class="detail-value monospace">45.142.xxx.xxx</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Target Port:</span>
+                                    <span class="detail-value monospace">53</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">AI Confidence:</span>
+                                    <span class="detail-value">85%</span>
+                                </div>
+                            </div>
+                            <div class="alert-actions">
+                                <button class="btn btn-danger btn-sm">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 1L1 5v6c0 4.4 3.1 8.5 7 9.5 3.9-1 7-5.1 7-9.5V5l-7-4z"/>
+                                    </svg>
+                                    Block IP
+                                </button>
+                                <button class="btn btn-secondary btn-sm">Tạo Ticket</button>
+                            </div>
+                        </div>
+
+                        <div class="alert-card alert-medium">
+                            <div class="alert-header">
+                                <span class="alert-priority">P3</span>
+                                <span class="alert-type">Anomaly</span>
+                                <span class="alert-time">1 giờ trước</span>
+                            </div>
+                            <div class="alert-title">Hành vi bất thường từ internal host</div>
+                            <div class="alert-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Source IP:</span>
+                                    <span class="detail-value monospace">192.168.1.45</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Behavior:</span>
+                                    <span class="detail-value">Port scanning</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">AI Confidence:</span>
+                                    <span class="detail-value">72%</span>
+                                </div>
+                            </div>
+                            <div class="alert-actions">
+                                <button class="btn btn-secondary btn-sm">Điều tra</button>
+                                <button class="btn btn-secondary btn-sm">Tạo Ticket</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Incidents View (Kanban Board) -->
+        <section class="view-section" id="incidents-view">
+            <div class="section-header">
+                <h2>Trung tâm Quản lý Sự cố</h2>
+                <div class="section-actions">
+                    <div class="search-box">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <circle cx="8" cy="8" r="6" stroke="currentColor" fill="none"/>
+                            <path d="M12 12l6 6"/>
+                        </svg>
+                        <input type="text" placeholder="Tìm kiếm sự cố...">
+                    </div>
+                    <button class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3v14M3 10h14"/>
+                        </svg>
+                        Tạo sự cố mới
+                    </button>
+                </div>
+            </div>
+
+            <div class="kanban-board">
+                <!-- Detected Column -->
+                <div class="kanban-column">
+                    <div class="column-header column-detected">
+                        <div class="column-title">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <circle cx="10" cy="10" r="8" stroke="currentColor" fill="none"/>
+                                <path d="M10 6v4l3 3"/>
+                            </svg>
+                            Detected
+                        </div>
+                        <span class="column-count">3</span>
+                    </div>
+                    <div class="column-content" data-status="detected">
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-critical">P1</div>
+                            <div class="card-title">DDoS Attack - SYN Flood</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-001</span>
+                                <span class="card-time">2m ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Source:</span>
+                                    <span class="value monospace">203.162.10.xxx</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Target:</span>
+                                    <span class="value monospace">:80, :443</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">AI Score:</span>
+                                    <span class="value">98%</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm">AI</div>
+                                    <span>Auto-detected</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-danger">DDoS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-high">P2</div>
+                            <div class="card-title">UDP Flood Attack</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-002</span>
+                                <span class="card-time">15m ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Source:</span>
+                                    <span class="value monospace">45.142.xxx.xxx</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Target:</span>
+                                    <span class="value monospace">:53</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">AI Score:</span>
+                                    <span class="value">85%</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm">AI</div>
+                                    <span>Auto-detected</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-danger">DDoS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-medium">P3</div>
+                            <div class="card-title">Port Scanning Activity</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-003</span>
+                                <span class="card-time">1h ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Source:</span>
+                                    <span class="value monospace">192.168.1.45</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Type:</span>
+                                    <span class="value">Internal scan</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">AI Score:</span>
+                                    <span class="value">72%</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm">AI</div>
+                                    <span>Auto-detected</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-warning">Anomaly</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investigating Column -->
+                <div class="kanban-column">
+                    <div class="column-header column-investigating">
+                        <div class="column-title">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <circle cx="8" cy="8" r="6" stroke="currentColor" fill="none"/>
+                                <path d="M12 12l6 6"/>
+                            </svg>
+                            Investigating
+                        </div>
+                        <span class="column-count">2</span>
+                    </div>
+                    <div class="column-content" data-status="investigating">
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-critical">P1</div>
+                            <div class="card-title">Brute Force Login Attempts</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-004</span>
+                                <span class="card-time">3h ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Source:</span>
+                                    <span class="value monospace">91.203.xxx.xxx</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Target:</span>
+                                    <span class="value monospace">SSH :22</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Attempts:</span>
+                                    <span class="value">2,847</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm" style="background: #1890FF;">JD</div>
+                                    <span>John Doe</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-danger">Intrusion</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-high">P2</div>
+                            <div class="card-title">Suspicious Outbound Traffic</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-005</span>
+                                <span class="card-time">5h ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Source:</span>
+                                    <span class="value monospace">10.0.5.128</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Destination:</span>
+                                    <span class="value monospace">Unknown C2</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">AI Score:</span>
+                                    <span class="value">91%</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm" style="background: #52C41A;">SM</div>
+                                    <span>Sarah Miller</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-warning">Malware</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mitigating Column -->
+                <div class="kanban-column">
+                    <div class="column-header column-mitigating">
+                        <div class="column-title">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 2L2 6v6c0 4.4 3.1 8.5 7 9.5 3.9-1 7-5.1 7-9.5V6l-7-4z"/>
+                            </svg>
+                            Mitigating
+                        </div>
+                        <span class="column-count">1</span>
+                    </div>
+                    <div class="column-content" data-status="mitigating">
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-critical">P1</div>
+                            <div class="card-title">Large Scale DDoS - Multi-vector</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-006</span>
+                                <span class="card-time">8h ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Sources:</span>
+                                    <span class="value">147 IPs</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Bandwidth:</span>
+                                    <span class="value">4.2 Gbps</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Mitigation:</span>
+                                    <span class="value">78% complete</span>
+                                </div>
+                            </div>
+                            <div class="card-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 78%;"></div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm" style="background: #FAAD14;">AD</div>
+                                    <span>Admin Team</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-danger">DDoS</span>
+                                    <span class="tag tag-info">Automated</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resolved Column -->
+                <div class="kanban-column">
+                    <div class="column-header column-resolved">
+                        <div class="column-title">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M7 13L3 9l1.4-1.4L7 10.2l8.6-8.6L17 3l-10 10z"/>
+                            </svg>
+                            Resolved
+                        </div>
+                        <span class="column-count">47</span>
+                    </div>
+                    <div class="column-content" data-status="resolved">
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-high">P2</div>
+                            <div class="card-title">HTTP Flood Attack</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-007</span>
+                                <span class="card-time">12h ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Duration:</span>
+                                    <span class="value">45 minutes</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Blocked IPs:</span>
+                                    <span class="value">23</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Status:</span>
+                                    <span class="value">✓ Resolved</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm" style="background: #1890FF;">JD</div>
+                                    <span>John Doe</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-success">Resolved</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="incident-card" draggable="true">
+                            <div class="card-priority card-priority-medium">P3</div>
+                            <div class="card-title">False Positive - Normal Traffic Spike</div>
+                            <div class="card-meta">
+                                <span class="card-id">#INC-2024-008</span>
+                                <span class="card-time">1d ago</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="label">Cause:</span>
+                                    <span class="value">Marketing campaign</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Resolution:</span>
+                                    <span class="value">Whitelist added</span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignee">
+                                    <div class="avatar avatar-sm" style="background: #52C41A;">SM</div>
+                                    <span>Sarah Miller</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag tag-info">False Positive</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Policies View -->
+        <section class="view-section" id="policies-view">
+            <div class="section-header">
+                <h2>Quản lý Chính sách</h2>
+                <div class="section-actions">
+                    <button class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M3 3h14v2H3zM3 8h14v2H3zM3 13h14v2H3z"/>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3v14M3 10h14"/>
+                        </svg>
+                        Thêm quy tắc
+                    </button>
+                </div>
+            </div>
+
+            <div class="policies-container">
+                <!-- Firewall Rules -->
+                <div class="policy-section">
+                    <h3>Firewall Rules</h3>
+                    <div class="table-container">
+                        <table class="policy-table">
+                            <thead>
+                                <tr>
+                                    <th>Rule ID</th>
+                                    <th>Name</th>
+                                    <th>Source IP</th>
+                                    <th>Port</th>
+                                    <th>Action</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="monospace">FW-001</td>
+                                    <td>Block Known DDoS Sources</td>
+                                    <td class="monospace">203.162.10.0/24</td>
+                                    <td class="monospace">*</td>
+                                    <td><span class="badge badge-danger">DENY</span></td>
+                                    <td>High</td>
+                                    <td><label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label></td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm-11 11L8 5l4 4-6.146 6.146a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Delete">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">FW-002</td>
+                                    <td>Rate Limit HTTP</td>
+                                    <td class="monospace">0.0.0.0/0</td>
+                                    <td class="monospace">80, 443</td>
+                                    <td><span class="badge badge-warning">LIMIT</span></td>
+                                    <td>Medium</td>
+                                    <td><label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label></td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm-11 11L8 5l4 4-6.146 6.146a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Delete">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">FW-003</td>
+                                    <td>Allow Internal Network</td>
+                                    <td class="monospace">192.168.0.0/16</td>
+                                    <td class="monospace">*</td>
+                                    <td><span class="badge badge-success">ALLOW</span></td>
+                                    <td>High</td>
+                                    <td><label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label></td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm-11 11L8 5l4 4-6.146 6.146a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Delete">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- IP Blacklist -->
+                <div class="policy-section">
+                    <h3>IP Blacklist</h3>
+                    <div class="table-container">
+                        <table class="policy-table">
+                            <thead>
+                                <tr>
+                                    <th>IP Address</th>
+                                    <th>Reason</th>
+                                    <th>Added By</th>
+                                    <th>Date Added</th>
+                                    <th>Expires</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="monospace">203.162.10.45</td>
+                                    <td>DDoS Source - SYN Flood</td>
+                                    <td>AI Auto-block</td>
+                                    <td>27/12/2024 14:30</td>
+                                    <td>Permanent</td>
+                                    <td>
+                                        <button class="btn-icon" title="Remove">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">45.142.120.88</td>
+                                    <td>UDP Flood Attack</td>
+                                    <td>AI Auto-block</td>
+                                    <td>27/12/2024 14:15</td>
+                                    <td>30 days</td>
+                                    <td>
+                                        <button class="btn-icon" title="Remove">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">91.203.45.12</td>
+                                    <td>Brute Force Attempts</td>
+                                    <td>John Doe</td>
+                                    <td>27/12/2024 11:20</td>
+                                    <td>7 days</td>
+                                    <td>
+                                        <button class="btn-icon" title="Remove">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- IP Whitelist -->
+                <div class="policy-section">
+                    <h3>IP Whitelist</h3>
+                    <div class="table-container">
+                        <table class="policy-table">
+                            <thead>
+                                <tr>
+                                    <th>IP Address</th>
+                                    <th>Description</th>
+                                    <th>Added By</th>
+                                    <th>Date Added</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="monospace">8.8.8.8</td>
+                                    <td>Google DNS</td>
+                                    <td>System</td>
+                                    <td>01/01/2024</td>
+                                    <td>
+                                        <button class="btn-icon" title="Remove">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">192.168.1.0/24</td>
+                                    <td>Internal Office Network</td>
+                                    <td>Admin</td>
+                                    <td>15/01/2024</td>
+                                    <td>
+                                        <button class="btn-icon" title="Remove">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Card Detail Modal -->
+    <div class="modal" id="card-detail-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chi tiết Sự cố</h2>
+                <button class="modal-close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
