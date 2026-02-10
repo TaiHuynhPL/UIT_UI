@@ -45,7 +45,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     const showNotification = useCallback((message: string, type: NotificationType = 'info') => {
         const id = nextId++;
-        setNotifications(prev => [...prev, { id, message, type }]);
+        setNotifications([{ id, message, type }]);
 
         // Auto close after 5 seconds
         setTimeout(() => {
