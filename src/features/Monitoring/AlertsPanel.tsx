@@ -12,11 +12,19 @@ export const AlertsPanel: React.FC = () => {
         showNotification('Ticket mới đã được tạo trong Kanban board', 'info');
     };
 
+    const handleAddAlert = () => {
+        showNotification('Đang quét mạng để phát hiện cảnh báo mới...', 'info');
+    };
+
+    const handleInvestigate = (source: string) => {
+        showNotification(`Đang mở điều tra cho ${source} — chuyển sang trang Sự cố để theo dõi`, 'warning');
+    };
+
     return (
         <div className="alerts-panel">
             <div className="panel-header">
                 <h2>Cảnh báo mới nhất</h2>
-                <button className="btn-icon">
+                <button className="btn-icon" onClick={handleAddAlert} title="Quét cảnh báo mới">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 3v14M3 10h14" />
                     </svg>
@@ -109,7 +117,7 @@ export const AlertsPanel: React.FC = () => {
                         </div>
                     </div>
                     <div className="alert-actions">
-                        <button className="btn btn-secondary btn-sm">Điều tra</button>
+                        <button className="btn btn-secondary btn-sm" onClick={() => handleInvestigate('192.168.1.45')}>Điều tra</button>
                         <button className="btn btn-secondary btn-sm" onClick={handleCreateTicket}>Tạo Ticket</button>
                     </div>
                 </div>

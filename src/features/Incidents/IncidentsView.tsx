@@ -3,12 +3,14 @@ import type { Incident } from '../../types';
 import { mockIncidents } from '../../data/mock';
 import { IncidentCard } from './IncidentCard';
 import { IncidentModal } from './IncidentModal';
+import { CreateIncidentModal } from './CreateIncidentModal';
 import { useNotification } from '../../components/Notification/NotificationContext';
 
 export const IncidentsView: React.FC = () => {
     const [incidents, setIncidents] = useState<Incident[]>(mockIncidents);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
+    const [showCreateModal, setShowCreateModal] = useState(false);
     const { showNotification } = useNotification();
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>, id: string) => {
@@ -45,6 +47,20 @@ export const IncidentsView: React.FC = () => {
         ));
 
         showNotification(`Ticket đã được chuyển sang ${status}`, 'success');
+    };
+
+    const handleCreateIncident = (newIncident: Incident) => {
+        setIncidents(prev => [newIncident, ...prev]);
+        setShowCreateModal(false);
+        showNotification(`Sự cố mới "${newIncident.title}" đã được tạo`, 'success');
+    };
+
+    const handleUpdateIncident = (updated: Incident) => {
+        setIncidents(prev => prev.map(inc =>
+            inc.id === updated.id ? updated : inc
+        ));
+        // Update the selected incident in the modal as well
+        setSelectedIncident(updated);
     };
 
     const filterIncidents = (status: Incident['status']) => {
@@ -99,7 +115,7 @@ export const IncidentsView: React.FC = () => {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <button className="btn btn-primary">
+                    <button className="btn btn-primary" onClick={() => setShowCreateModal(true)}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10 3v14M3 10h14" />
                         </svg>
@@ -140,6 +156,14 @@ export const IncidentsView: React.FC = () => {
                 <IncidentModal
                     incident={selectedIncident}
                     onClose={() => setSelectedIncident(null)}
+                    onUpdate={handleUpdateIncident}
+                />
+            )}
+
+            {showCreateModal && (
+                <CreateIncidentModal
+                    onClose={() => setShowCreateModal(false)}
+                    onCreate={handleCreateIncident}
                 />
             )}
         </section>
