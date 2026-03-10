@@ -1,12 +1,16 @@
-import React from 'react';
-import type { ViewType } from '../../types';
+import React, { useState } from 'react';
+import type { ViewType, User } from '../../types';
 
 interface HeaderProps {
     currentView: ViewType;
     onViewChange: (view: ViewType) => void;
+    user: User | null;
+    onLogout: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => {
+export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange, user, onLogout }) => {
+    const [showUserMenu, setShowUserMenu] = useState(false);
+
     return (
         <header className="main-header">
             <div className="header-left">
@@ -58,11 +62,42 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => 
                     <span className="status-dot status-safe"></span>
                     <span className="status-text">Hệ thống an toàn</span>
                 </div>
-                <div className="user-profile">
-                    <div className="user-avatar">AD</div>
-                    <span className="user-name">Quản trị viên</span>
+                <div
+                    className="user-profile"
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                >
+                    <div className="user-avatar">{user?.avatar || 'AD'}</div>
+                    <div className="user-info-block">
+                        <span className="user-name">{user?.name || 'Quản trị viên'}</span>
+                        <span className="user-role">{user?.role || ''}</span>
+                    </div>
+                    <svg className="user-dropdown-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+
+                    {showUserMenu && (
+                        <div className="user-menu">
+                            <div className="user-menu-header">
+                                <div className="user-avatar" style={{ width: 40, height: 40, fontSize: 16 }}>{user?.avatar || 'AD'}</div>
+                                <div>
+                                    <div className="user-menu-name">{user?.name}</div>
+                                    <div className="user-menu-email">{user?.email}</div>
+                                </div>
+                            </div>
+                            <div className="user-menu-divider"></div>
+                            <button className="user-menu-item user-menu-logout" onClick={(e) => { e.stopPropagation(); onLogout(); }}>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" y1="12" x2="9" y2="12" />
+                                </svg>
+                                Đăng xuất
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>
     );
 };
+

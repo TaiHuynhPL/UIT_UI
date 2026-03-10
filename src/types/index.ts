@@ -1,5 +1,13 @@
 export type ViewType = 'monitoring' | 'incidents' | 'policies';
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar: string; // Initials
+}
+
 export interface Incident {
   id: string;
   title: string;
