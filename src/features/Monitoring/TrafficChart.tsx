@@ -117,8 +117,8 @@ export const TrafficChart: React.FC = () => {
             ctx.fillStyle = '#6E6E80';
             ctx.font = '12px Inter';
             ctx.fillText('0', 10, canvas.height - padding + 5);
-            ctx.fillText('Time', canvas.width / 2 - 15, canvas.height - 10);
-            ctx.fillText('Traffic', 10, 20);
+            ctx.fillText('Thời gian', canvas.width / 2 - 15, canvas.height - 10);
+            ctx.fillText('Lưu lượng', 10, 20);
         };
 
         // Resize handler

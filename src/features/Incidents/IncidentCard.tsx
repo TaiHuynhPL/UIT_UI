@@ -32,19 +32,19 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onDragStar
             <div className="card-details">
                 {incident.source && (
                     <div className="detail-item">
-                        <span className="label">Source:</span>
+                        <span className="label">Nguồn:</span>
                         <span className="value monospace">{incident.source}</span>
                     </div>
                 )}
                 {incident.target && (
                     <div className="detail-item">
-                        <span className="label">Target:</span>
+                        <span className="label">Mục tiêu:</span>
                         <span className="value monospace">{incident.target}</span>
                     </div>
                 )}
                 {incident.aiScore && (
                     <div className="detail-item">
-                        <span className="label">AI Score:</span>
+                        <span className="label">Điểm AI:</span>
                         <span className="value">{incident.aiScore}</span>
                     </div>
                 )}

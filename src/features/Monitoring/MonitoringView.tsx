@@ -27,7 +27,7 @@ export const MonitoringView: React.FC = () => {
                 {/* Left Panel: Monitoring Charts */}
                 <div className="monitoring-panel">
                     <div className="panel-header">
-                        <h2>Dashboard Giám sát</h2>
+                        <h2>Bảng điều khiển Giám sát</h2>
                         <div className="time-selector">
                             <button
                                 className={`time-btn ${timeRange === 'realtime' ? 'active' : ''}`}

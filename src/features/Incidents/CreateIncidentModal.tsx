@@ -15,8 +15,8 @@ export const CreateIncidentModal: React.FC<CreateIncidentModalProps> = ({ onClos
 
     const tagLabels: Record<string, string> = {
         danger: 'DDoS',
-        warning: 'Anomaly',
-        info: 'Intrusion',
+        warning: 'Bất thường',
+        info: 'Xâm nhập',
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -57,7 +57,7 @@ export const CreateIncidentModal: React.FC<CreateIncidentModalProps> = ({ onClos
                             <input
                                 type="text"
                                 className="form-input"
-                                placeholder="VD: DDoS Attack - SYN Flood"
+                                placeholder="VD: Tấn công DDoS - SYN Flood"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
@@ -71,15 +71,15 @@ export const CreateIncidentModal: React.FC<CreateIncidentModalProps> = ({ onClos
                                 value={priority}
                                 onChange={(e) => setPriority(e.target.value as Incident['priority'])}
                             >
-                                <option value="critical">P1 - Critical</option>
-                                <option value="high">P2 - High</option>
-                                <option value="medium">P3 - Medium</option>
-                                <option value="low">P4 - Low</option>
+                                <option value="critical">P1 - Nghiêm trọng</option>
+                                <option value="high">P2 - Cao</option>
+                                <option value="medium">P3 - Trung bình</option>
+                                <option value="low">P4 - Thấp</option>
                             </select>
                         </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label className="form-label">Source IP</label>
+                                <label className="form-label">IP nguồn</label>
                                 <input
                                     type="text"
                                     className="form-input"
@@ -89,7 +89,7 @@ export const CreateIncidentModal: React.FC<CreateIncidentModalProps> = ({ onClos
                                 />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Target</label>
+                                <label className="form-label">Mục tiêu</label>
                                 <input
                                     type="text"
                                     className="form-input"
@@ -107,8 +107,8 @@ export const CreateIncidentModal: React.FC<CreateIncidentModalProps> = ({ onClos
                                 onChange={(e) => setTagType(e.target.value as 'danger' | 'warning' | 'info')}
                             >
                                 <option value="danger">DDoS</option>
-                                <option value="warning">Anomaly</option>
-                                <option value="info">Intrusion</option>
+                                <option value="warning">Bất thường</option>
+                                <option value="info">Xâm nhập</option>
                             </select>
                         </div>
                         <div className="modal-actions">

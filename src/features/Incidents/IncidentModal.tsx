@@ -13,11 +13,18 @@ export const IncidentModal: React.FC<IncidentModalProps> = ({ incident, onClose,
     const { showNotification } = useNotification();
     const [showLog, setShowLog] = useState(false);
 
+    const statusLabels: Record<string, string> = {
+        detected: 'Phát hiện',
+        investigating: 'Đang điều tra',
+        mitigating: 'Đang xử lý',
+        resolved: 'Đã giải quyết',
+    };
+
     const handleBlockIP = () => {
         if (incident.source) {
-            showNotification(`IP ${incident.source} đã bị chặn và thêm vào blacklist`, 'success');
+            showNotification(`IP ${incident.source} đã bị chặn và thêm vào danh sách đen`, 'success');
         } else {
-            showNotification('Không có thông tin Source IP để chặn', 'warning');
+            showNotification('Không có thông tin IP nguồn để chặn', 'warning');
         }
     };
 
@@ -40,7 +47,7 @@ export const IncidentModal: React.FC<IncidentModalProps> = ({ incident, onClose,
             status: 'resolved',
         };
         onUpdate(updated);
-        showNotification(`Ticket #${incident.id} đã được đóng và chuyển sang Resolved`, 'success');
+        showNotification(`Sự cố #${incident.id} đã được đóng và chuyển sang Đã giải quyết`, 'success');
         onClose();
     };
 
@@ -75,29 +82,29 @@ export const IncidentModal: React.FC<IncidentModalProps> = ({ incident, onClose,
                     <div className="modal-details">
                         {incident.source && (
                             <div className="modal-detail-row">
-                                <span className="modal-detail-label">Source:</span>
+                                <span className="modal-detail-label">Nguồn:</span>
                                 <span className="modal-detail-value">{incident.source}</span>
                             </div>
                         )}
                         {incident.target && (
                             <div className="modal-detail-row">
-                                <span className="modal-detail-label">Target:</span>
+                                <span className="modal-detail-label">Mục tiêu:</span>
                                 <span className="modal-detail-value">{incident.target}</span>
                             </div>
                         )}
                         {incident.aiScore && (
                             <div className="modal-detail-row">
-                                <span className="modal-detail-label">AI Score:</span>
+                                <span className="modal-detail-label">Điểm AI:</span>
                                 <span className="modal-detail-value">{incident.aiScore}</span>
                             </div>
                         )}
                         <div className="modal-detail-row">
-                            <span className="modal-detail-label">Assignee:</span>
+                            <span className="modal-detail-label">Người phụ trách:</span>
                             <span className="modal-detail-value">{incident.assignee?.name || 'Chưa gán'}</span>
                         </div>
                         <div className="modal-detail-row">
-                            <span className="modal-detail-label">Status:</span>
-                            <span className="modal-detail-value">{incident.status}</span>
+                            <span className="modal-detail-label">Trạng thái:</span>
+                            <span className="modal-detail-value">{statusLabels[incident.status] || incident.status}</span>
                         </div>
                     </div>
                     <div className="modal-actions">
@@ -105,18 +112,18 @@ export const IncidentModal: React.FC<IncidentModalProps> = ({ incident, onClose,
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                 <path d="M8 1L1 5v6c0 4.4 3.1 8.5 7 9.5 3.9-1 7-5.1 7-9.5V5l-7-4z" />
                             </svg>
-                            Block IP
+                            Chặn IP
                         </button>
                         <button className="btn btn-primary" onClick={handleAssignToMe}>Gán cho tôi</button>
                         <button className="btn btn-secondary" onClick={handleViewLog}>
-                            {showLog ? 'Ẩn Log' : 'Xem Log'}
+                            {showLog ? 'Ẩn nhật ký' : 'Xem nhật ký'}
                         </button>
-                        <button className="btn btn-secondary" onClick={handleCloseTicket}>Đóng Ticket</button>
+                        <button className="btn btn-secondary" onClick={handleCloseTicket}>Đóng sự cố</button>
                     </div>
 
                     {showLog && (
                         <div className="modal-log-section">
-                            <h4>System Log</h4>
+                            <h4>Nhật ký hệ thống</h4>
                             <div className="log-container">
                                 {mockLogs.map((log, idx) => (
                                     <div key={idx} className="log-entry">
@@ -129,7 +136,7 @@ export const IncidentModal: React.FC<IncidentModalProps> = ({ incident, onClose,
                     )}
 
                     <div className="modal-timeline">
-                        <h4>Timeline</h4>
+                        <h4>Dòng thời gian</h4>
                         <div className="timeline-item">
                             <div className="timeline-dot"></div>
                             <div className="timeline-content">

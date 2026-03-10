@@ -21,9 +21,9 @@ export const SystemHealth: React.FC = () => {
     }, []);
 
     const getGaugeColor = (value: number) => {
-        if (value < 60) return { class: 'gauge-fill-success', color: '#52C41A', label: 'Normal' };
-        if (value < 80) return { class: 'gauge-fill-warning', color: '#FAAD14', label: 'Elevated' };
-        return { class: 'gauge-fill-danger', color: '#FF4D4F', label: 'Critical' };
+        if (value < 60) return { class: 'gauge-fill-success', color: '#52C41A', label: 'Bình thường' };
+        if (value < 80) return { class: 'gauge-fill-warning', color: '#FAAD14', label: 'Tăng cao' };
+        return { class: 'gauge-fill-danger', color: '#FF4D4F', label: 'Nghiêm trọng' };
     };
 
     const renderGauge = (value: number, title: string) => {
@@ -55,9 +55,9 @@ export const SystemHealth: React.FC = () => {
 
     return (
         <div className="system-health-grid">
-            {renderGauge(cpu, 'CPU Usage')}
-            {renderGauge(ram, 'RAM Usage')}
-            {renderGauge(network, 'Network Load')}
+            {renderGauge(cpu, 'Sử dụng CPU')}
+            {renderGauge(ram, 'Sử dụng RAM')}
+            {renderGauge(network, 'Tải mạng')}
         </div>
     );
 };

@@ -3,20 +3,20 @@ import type { FirewallRule, BlacklistEntry, WhitelistEntry } from '../../types';
 import { useNotification } from '../../components/Notification/NotificationContext';
 
 const initialFirewallRules: FirewallRule[] = [
-    { id: 'FW-001', name: 'Block Known DDoS Sources', sourceIp: '203.162.10.0/24', port: '*', action: 'DENY', priority: 'High', enabled: true },
-    { id: 'FW-002', name: 'Rate Limit HTTP', sourceIp: '0.0.0.0/0', port: '80, 443', action: 'LIMIT', priority: 'Medium', enabled: true },
-    { id: 'FW-003', name: 'Allow Internal Network', sourceIp: '192.168.0.0/16', port: '*', action: 'ALLOW', priority: 'High', enabled: true },
+    { id: 'FW-001', name: 'Chặn nguồn DDoS đã biết', sourceIp: '203.162.10.0/24', port: '*', action: 'DENY', priority: 'High', enabled: true },
+    { id: 'FW-002', name: 'Giới hạn tốc độ HTTP', sourceIp: '0.0.0.0/0', port: '80, 443', action: 'LIMIT', priority: 'Medium', enabled: true },
+    { id: 'FW-003', name: 'Cho phép mạng nội bộ', sourceIp: '192.168.0.0/16', port: '*', action: 'ALLOW', priority: 'High', enabled: true },
 ];
 
 const initialBlacklist: BlacklistEntry[] = [
-    { ip: '203.162.10.45', reason: 'DDoS Source - SYN Flood', addedBy: 'AI Auto-block', dateAdded: '27/12/2024 14:30', expires: 'Permanent' },
-    { ip: '45.142.120.88', reason: 'UDP Flood Attack', addedBy: 'AI Auto-block', dateAdded: '27/12/2024 14:15', expires: '30 days' },
-    { ip: '91.203.45.12', reason: 'Brute Force Attempts', addedBy: 'John Doe', dateAdded: '27/12/2024 11:20', expires: '7 days' },
+    { ip: '203.162.10.45', reason: 'Nguồn DDoS - SYN Flood', addedBy: 'AI tự động chặn', dateAdded: '27/12/2024 14:30', expires: 'Vĩnh viễn' },
+    { ip: '45.142.120.88', reason: 'Tấn công UDP Flood', addedBy: 'AI tự động chặn', dateAdded: '27/12/2024 14:15', expires: '30 ngày' },
+    { ip: '91.203.45.12', reason: 'Dò mật khẩu', addedBy: 'John Doe', dateAdded: '27/12/2024 11:20', expires: '7 ngày' },
 ];
 
 const initialWhitelist: WhitelistEntry[] = [
-    { ip: '8.8.8.8', description: 'Google DNS', addedBy: 'System', dateAdded: '01/01/2024' },
-    { ip: '192.168.1.0/24', description: 'Internal Office Network', addedBy: 'Admin', dateAdded: '15/01/2024' },
+    { ip: '8.8.8.8', description: 'Google DNS', addedBy: 'Hệ thống', dateAdded: '01/01/2024' },
+    { ip: '192.168.1.0/24', description: 'Mạng văn phòng nội bộ', addedBy: 'Quản trị viên', dateAdded: '15/01/2024' },
 ];
 
 // --- Add/Edit Firewall Rule Modal ---
@@ -61,34 +61,34 @@ const RuleModal: React.FC<RuleModalProps> = ({ rule, onClose, onSave }) => {
                 <div className="modal-body">
                     <form onSubmit={handleSubmit} className="create-incident-form">
                         <div className="form-group">
-                            <label className="form-label">Rule Name *</label>
-                            <input className="form-input" value={name} onChange={e => setName(e.target.value)} placeholder="VD: Block SSH Brute Force" required autoFocus />
+                            <label className="form-label">Tên quy tắc *</label>
+                            <input className="form-input" value={name} onChange={e => setName(e.target.value)} placeholder="VD: Chặn SSH Brute Force" required autoFocus />
                         </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label className="form-label">Source IP *</label>
+                                <label className="form-label">IP nguồn *</label>
                                 <input className="form-input" value={sourceIp} onChange={e => setSourceIp(e.target.value)} placeholder="VD: 10.0.0.0/8" required />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Port</label>
+                                <label className="form-label">Cổng</label>
                                 <input className="form-input" value={port} onChange={e => setPort(e.target.value)} placeholder="VD: 22, 80" />
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label className="form-label">Action</label>
+                                <label className="form-label">Hành động</label>
                                 <select className="form-select" value={action} onChange={e => setAction(e.target.value as FirewallRule['action'])}>
-                                    <option value="DENY">DENY</option>
-                                    <option value="LIMIT">LIMIT</option>
-                                    <option value="ALLOW">ALLOW</option>
+                                    <option value="DENY">TỪ CHỐI</option>
+                                    <option value="LIMIT">GIỚI HẠN</option>
+                                    <option value="ALLOW">CHO PHÉP</option>
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Priority</label>
+                                <label className="form-label">Mức độ ưu tiên</label>
                                 <select className="form-select" value={priority} onChange={e => setPriority(e.target.value as FirewallRule['priority'])}>
-                                    <option value="High">High</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="Low">Low</option>
+                                    <option value="High">Cao</option>
+                                    <option value="Medium">Trung bình</option>
+                                    <option value="Low">Thấp</option>
                                 </select>
                             </div>
                         </div>
@@ -147,7 +147,7 @@ export const PoliciesView: React.FC = () => {
         setFirewallRules(prev => prev.map(r => {
             if (r.id === id) {
                 const updated = { ...r, enabled: !r.enabled };
-                showNotification(`Rule ${r.id} đã ${updated.enabled ? 'bật' : 'tắt'}`, updated.enabled ? 'success' : 'warning');
+                showNotification(`Quy tắc ${r.id} đã ${updated.enabled ? 'bật' : 'tắt'}`, updated.enabled ? 'success' : 'warning');
                 return updated;
             }
             return r;
@@ -160,10 +160,10 @@ export const PoliciesView: React.FC = () => {
             if (idx >= 0) {
                 const updated = [...prev];
                 updated[idx] = rule;
-                showNotification(`Rule ${rule.id} đã được cập nhật`, 'success');
+                showNotification(`Quy tắc ${rule.id} đã được cập nhật`, 'success');
                 return updated;
             }
-            showNotification(`Rule ${rule.id} đã được tạo`, 'success');
+            showNotification(`Quy tắc ${rule.id} đã được tạo`, 'success');
             return [...prev, rule];
         });
         setRuleModal({ show: false });
@@ -172,10 +172,10 @@ export const PoliciesView: React.FC = () => {
     const handleDeleteRule = (id: string) => {
         setConfirmDialog({
             show: true,
-            message: `Bạn có chắc muốn xóa rule ${id}?`,
+            message: `Bạn có chắc muốn xóa quy tắc ${id}?`,
             onConfirm: () => {
                 setFirewallRules(prev => prev.filter(r => r.id !== id));
-                showNotification(`Rule ${id} đã bị xóa`, 'danger');
+                showNotification(`Quy tắc ${id} đã bị xóa`, 'danger');
                 setConfirmDialog({ show: false, message: '', onConfirm: () => { } });
             },
         });
@@ -185,10 +185,10 @@ export const PoliciesView: React.FC = () => {
     const handleRemoveBlacklist = (ip: string) => {
         setConfirmDialog({
             show: true,
-            message: `Bạn có chắc muốn xóa IP ${ip} khỏi blacklist?`,
+            message: `Bạn có chắc muốn xóa IP ${ip} khỏi danh sách đen?`,
             onConfirm: () => {
                 setBlacklist(prev => prev.filter(e => e.ip !== ip));
-                showNotification(`IP ${ip} đã được xóa khỏi blacklist`, 'success');
+                showNotification(`IP ${ip} đã được xóa khỏi danh sách đen`, 'success');
                 setConfirmDialog({ show: false, message: '', onConfirm: () => { } });
             },
         });
@@ -197,10 +197,10 @@ export const PoliciesView: React.FC = () => {
     const handleRemoveWhitelist = (ip: string) => {
         setConfirmDialog({
             show: true,
-            message: `Bạn có chắc muốn xóa IP ${ip} khỏi whitelist?`,
+            message: `Bạn có chắc muốn xóa IP ${ip} khỏi danh sách trắng?`,
             onConfirm: () => {
                 setWhitelist(prev => prev.filter(e => e.ip !== ip));
-                showNotification(`IP ${ip} đã được xóa khỏi whitelist`, 'success');
+                showNotification(`IP ${ip} đã được xóa khỏi danh sách trắng`, 'success');
                 setConfirmDialog({ show: false, message: '', onConfirm: () => { } });
             },
         });
@@ -213,15 +213,16 @@ export const PoliciesView: React.FC = () => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `soc-policies-${new Date().toISOString().slice(0, 10)}.json`;
+        a.download = `soc-chinh-sach-${new Date().toISOString().slice(0, 10)}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        showNotification('Đã export dữ liệu chính sách thành công', 'success');
+        showNotification('Đã xuất dữ liệu chính sách thành công', 'success');
     };
 
     const actionBadge = (action: FirewallRule['action']) => {
+        const labels: Record<string, string> = { DENY: 'TỪ CHỐI', LIMIT: 'GIỚI HẠN', ALLOW: 'CHO PHÉP' };
         const cls = action === 'DENY' ? 'badge-danger' : action === 'LIMIT' ? 'badge-warning' : 'badge-success';
-        return <span className={`badge ${cls}`}>{action}</span>;
+        return <span className={`badge ${cls}`}>{labels[action]}</span>;
     };
 
     return (
@@ -233,7 +234,7 @@ export const PoliciesView: React.FC = () => {
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 3h14v2H3zM3 8h14v2H3zM3 13h14v2H3z" />
                         </svg>
-                        Export
+                        Xuất dữ liệu
                     </button>
                     <button className="btn btn-primary" onClick={() => setRuleModal({ show: true })}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -245,21 +246,21 @@ export const PoliciesView: React.FC = () => {
             </div>
 
             <div className="policies-container">
-                {/* Firewall Rules */}
+                {/* Quy tắc tường lửa */}
                 <div className="policy-section">
-                    <h3>Firewall Rules</h3>
+                    <h3>Quy tắc tường lửa</h3>
                     <div className="table-container">
                         <table className="policy-table">
                             <thead>
                                 <tr>
-                                    <th>Rule ID</th>
-                                    <th>Name</th>
-                                    <th>Source IP</th>
-                                    <th>Port</th>
-                                    <th>Action</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>Mã quy tắc</th>
+                                    <th>Tên</th>
+                                    <th>IP nguồn</th>
+                                    <th>Cổng</th>
+                                    <th>Hành động</th>
+                                    <th>Ưu tiên</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -270,7 +271,7 @@ export const PoliciesView: React.FC = () => {
                                         <td className="monospace">{rule.sourceIp}</td>
                                         <td className="monospace">{rule.port}</td>
                                         <td>{actionBadge(rule.action)}</td>
-                                        <td>{rule.priority}</td>
+                                        <td>{rule.priority === 'High' ? 'Cao' : rule.priority === 'Medium' ? 'Trung bình' : 'Thấp'}</td>
                                         <td>
                                             <label className="toggle-switch">
                                                 <input type="checkbox" checked={rule.enabled} onChange={() => handleToggleRule(rule.id)} />
@@ -278,12 +279,12 @@ export const PoliciesView: React.FC = () => {
                                             </label>
                                         </td>
                                         <td>
-                                            <button className="btn-icon" title="Edit" onClick={() => setRuleModal({ show: true, rule })}>
+                                            <button className="btn-icon" title="Sửa" onClick={() => setRuleModal({ show: true, rule })}>
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm-11 11L8 5l4 4-6.146 6.146a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168z" />
                                                 </svg>
                                             </button>
-                                            <button className="btn-icon" title="Delete" onClick={() => handleDeleteRule(rule.id)}>
+                                            <button className="btn-icon" title="Xóa" onClick={() => handleDeleteRule(rule.id)}>
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -293,26 +294,26 @@ export const PoliciesView: React.FC = () => {
                                     </tr>
                                 ))}
                                 {firewallRules.length === 0 && (
-                                    <tr><td colSpan={8} style={{ textAlign: 'center', color: '#6E6E80', padding: '24px' }}>Chưa có rule nào</td></tr>
+                                    <tr><td colSpan={8} style={{ textAlign: 'center', color: '#6E6E80', padding: '24px' }}>Chưa có quy tắc nào</td></tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                {/* IP Blacklist */}
+                {/* Danh sách đen IP */}
                 <div className="policy-section">
-                    <h3>IP Blacklist</h3>
+                    <h3>Danh sách đen IP</h3>
                     <div className="table-container">
                         <table className="policy-table">
                             <thead>
                                 <tr>
-                                    <th>IP Address</th>
-                                    <th>Reason</th>
-                                    <th>Added By</th>
-                                    <th>Date Added</th>
-                                    <th>Expires</th>
-                                    <th>Actions</th>
+                                    <th>Địa chỉ IP</th>
+                                    <th>Lý do</th>
+                                    <th>Thêm bởi</th>
+                                    <th>Ngày thêm</th>
+                                    <th>Hết hạn</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -324,7 +325,7 @@ export const PoliciesView: React.FC = () => {
                                         <td>{entry.dateAdded}</td>
                                         <td>{entry.expires}</td>
                                         <td>
-                                            <button className="btn-icon" title="Remove" onClick={() => handleRemoveBlacklist(entry.ip)}>
+                                            <button className="btn-icon" title="Xóa" onClick={() => handleRemoveBlacklist(entry.ip)}>
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                                 </svg>
@@ -333,25 +334,25 @@ export const PoliciesView: React.FC = () => {
                                     </tr>
                                 ))}
                                 {blacklist.length === 0 && (
-                                    <tr><td colSpan={6} style={{ textAlign: 'center', color: '#6E6E80', padding: '24px' }}>Blacklist trống</td></tr>
+                                    <tr><td colSpan={6} style={{ textAlign: 'center', color: '#6E6E80', padding: '24px' }}>Danh sách đen trống</td></tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                {/* IP Whitelist */}
+                {/* Danh sách trắng IP */}
                 <div className="policy-section">
-                    <h3>IP Whitelist</h3>
+                    <h3>Danh sách trắng IP</h3>
                     <div className="table-container">
                         <table className="policy-table">
                             <thead>
                                 <tr>
-                                    <th>IP Address</th>
-                                    <th>Description</th>
-                                    <th>Added By</th>
-                                    <th>Date Added</th>
-                                    <th>Actions</th>
+                                    <th>Địa chỉ IP</th>
+                                    <th>Mô tả</th>
+                                    <th>Thêm bởi</th>
+                                    <th>Ngày thêm</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -362,7 +363,7 @@ export const PoliciesView: React.FC = () => {
                                         <td>{entry.addedBy}</td>
                                         <td>{entry.dateAdded}</td>
                                         <td>
-                                            <button className="btn-icon" title="Remove" onClick={() => handleRemoveWhitelist(entry.ip)}>
+                                            <button className="btn-icon" title="Xóa" onClick={() => handleRemoveWhitelist(entry.ip)}>
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                                 </svg>
@@ -371,7 +372,7 @@ export const PoliciesView: React.FC = () => {
                                     </tr>
                                 ))}
                                 {whitelist.length === 0 && (
-                                    <tr><td colSpan={5} style={{ textAlign: 'center', color: '#6E6E80', padding: '24px' }}>Whitelist trống</td></tr>
+                                    <tr><td colSpan={5} style={{ textAlign: 'center', color: '#6E6E80', padding: '24px' }}>Danh sách trắng trống</td></tr>
                                 )}
                             </tbody>
                         </table>

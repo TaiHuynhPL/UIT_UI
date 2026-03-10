@@ -46,7 +46,13 @@ export const IncidentsView: React.FC = () => {
             inc.id === id ? { ...inc, status } : inc
         ));
 
-        showNotification(`Ticket đã được chuyển sang ${status}`, 'success');
+        const statusLabels: Record<string, string> = {
+            detected: 'Phát hiện',
+            investigating: 'Đang điều tra',
+            mitigating: 'Đang xử lý',
+            resolved: 'Đã giải quyết',
+        };
+        showNotification(`Sự cố đã được chuyển sang ${statusLabels[status] || status}`, 'success');
     };
 
     const handleCreateIncident = (newIncident: Incident) => {
@@ -125,27 +131,27 @@ export const IncidentsView: React.FC = () => {
             </div>
 
             <div className="kanban-board">
-                {renderColumn('Detected', 'detected', (
+                {renderColumn('Phát hiện', 'detected', (
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                         <circle cx="10" cy="10" r="8" stroke="currentColor" fill="none" />
                         <path d="M10 6v4l3 3" />
                     </svg>
                 ), filterIncidents('detected').length, 'column-detected')}
 
-                {renderColumn('Investigating', 'investigating', (
+                {renderColumn('Đang điều tra', 'investigating', (
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                         <circle cx="8" cy="8" r="6" stroke="currentColor" fill="none" />
                         <path d="M12 12l6 6" />
                     </svg>
                 ), filterIncidents('investigating').length, 'column-investigating')}
 
-                {renderColumn('Mitigating', 'mitigating', (
+                {renderColumn('Đang xử lý', 'mitigating', (
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 2L2 6v6c0 4.4 3.1 8.5 7 9.5 3.9-1 7-5.1 7-9.5V6l-7-4z" />
                     </svg>
                 ), filterIncidents('mitigating').length, 'column-mitigating')}
 
-                {renderColumn('Resolved', 'resolved', (
+                {renderColumn('Đã giải quyết', 'resolved', (
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M7 13L3 9l1.4-1.4L7 10.2l8.6-8.6L17 3l-10 10z" />
                     </svg>

@@ -16,7 +16,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => 
                         <path d="M16 8L22 12V20L16 24L10 20V12L16 8Z" stroke="white" strokeWidth="2" fill="none" />
                         <circle cx="16" cy="16" r="3" fill="white" />
                     </svg>
-                    <h1>SOC Dashboard</h1>
+                    <h1>Bảng điều khiển SOC</h1>
                 </div>
             </div>
             <div className="header-center">
@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => 
                 </div>
                 <div className="user-profile">
                     <div className="user-avatar">AD</div>
-                    <span className="user-name">Admin</span>
+                    <span className="user-name">Quản trị viên</span>
                 </div>
             </div>
         </header>

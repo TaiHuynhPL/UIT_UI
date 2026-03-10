@@ -3,98 +3,97 @@ import type { Incident } from '../types';
 export const mockIncidents: Incident[] = [
     {
         id: 'INC-2024-001',
-        title: 'DDoS Attack - SYN Flood',
+        title: 'Tấn công DDoS - SYN Flood',
         priority: 'critical',
-        time: '2m ago',
+        time: '2 phút trước',
         source: '203.162.10.xxx',
         target: ':80, :443',
         aiScore: '98%',
         status: 'detected',
         tags: [{ label: 'DDoS', type: 'danger' }],
-        assignee: { name: 'Auto-detected', avatar: 'AI' }
+        assignee: { name: 'Tự động phát hiện', avatar: 'AI' }
     },
     {
         id: 'INC-2024-002',
-        title: 'UDP Flood Attack',
+        title: 'Tấn công UDP Flood',
         priority: 'high',
-        time: '15m ago',
+        time: '15 phút trước',
         source: '45.142.xxx.xxx',
         target: ':53',
         aiScore: '85%',
         status: 'detected',
         tags: [{ label: 'DDoS', type: 'danger' }],
-        assignee: { name: 'Auto-detected', avatar: 'AI' }
+        assignee: { name: 'Tự động phát hiện', avatar: 'AI' }
     },
     {
         id: 'INC-2024-003',
-        title: 'Port Scanning Activity',
+        title: 'Hoạt động quét cổng',
         priority: 'medium',
-        time: '1h ago',
+        time: '1 giờ trước',
         source: '192.168.1.45',
-        type: 'Internal scan',
+        type: 'Quét nội bộ',
         aiScore: '72%',
         status: 'detected',
-        tags: [{ label: 'Anomaly', type: 'warning' }],
-        assignee: { name: 'Auto-detected', avatar: 'AI' }
+        tags: [{ label: 'Bất thường', type: 'warning' }],
+        assignee: { name: 'Tự động phát hiện', avatar: 'AI' }
     },
     {
         id: 'INC-2024-004',
-        title: 'Brute Force Login Attempts',
+        title: 'Tấn công dò mật khẩu',
         priority: 'critical',
-        time: '3h ago',
+        time: '3 giờ trước',
         source: '91.203.xxx.xxx',
         target: 'SSH :22',
-        aiScore: '2,847 (Attempts)', // Reusing field for generic value match
+        aiScore: '2.847 (Lần thử)',
         status: 'investigating',
-        tags: [{ label: 'Intrusion', type: 'danger' }],
+        tags: [{ label: 'Xâm nhập', type: 'danger' }],
         assignee: { name: 'John Doe', avatar: 'JD', color: '#1890FF' }
     },
     {
         id: 'INC-2024-005',
-        title: 'Suspicious Outbound Traffic',
+        title: 'Lưu lượng ra bất thường',
         priority: 'high',
-        time: '5h ago',
+        time: '5 giờ trước',
         source: '10.0.5.128',
-        target: 'Unknown C2',
+        target: 'C2 không xác định',
         aiScore: '91%',
         status: 'investigating',
-        tags: [{ label: 'Malware', type: 'warning' }],
+        tags: [{ label: 'Mã độc', type: 'warning' }],
         assignee: { name: 'Sarah Miller', avatar: 'SM', color: '#52C41A' }
     },
     {
         id: 'INC-2024-006',
-        title: 'Large Scale DDoS - Multi-vector',
+        title: 'DDoS quy mô lớn - Đa vector',
         priority: 'critical',
-        time: '8h ago',
-        source: '147 IPs', // Mapping 'source' to 'Sources'
-        target: '4.2 Gbps', // Mapping 'target' to 'Bandwidth'
-        aiScore: '78% complete', // Mapping 'aiScore' to 'Mitigation'
+        time: '8 giờ trước',
+        source: '147 IP',
+        target: '4.2 Gbps',
+        aiScore: '78% hoàn thành',
         status: 'mitigating',
         progress: 78,
-        tags: [{ label: 'DDoS', type: 'danger' }, { label: 'Automated', type: 'info' }],
-        assignee: { name: 'Admin Team', avatar: 'AD', color: '#FAAD14' }
+        tags: [{ label: 'DDoS', type: 'danger' }, { label: 'Tự động', type: 'info' }],
+        assignee: { name: 'Đội quản trị', avatar: 'AD', color: '#FAAD14' }
     },
-    // Resolved examples (truncated for brevity but structure is same)
     {
         id: 'INC-2024-007',
-        title: 'HTTP Flood Attack',
+        title: 'Tấn công HTTP Flood',
         priority: 'high',
-        time: '12h ago',
-        source: '23 (Blocked IPs)',
-        target: '45 minutes',
+        time: '12 giờ trước',
+        source: '23 (IP đã chặn)',
+        target: '45 phút',
         status: 'resolved',
-        tags: [{ label: 'Resolved', type: 'success' }],
+        tags: [{ label: 'Đã xử lý', type: 'success' }],
         assignee: { name: 'John Doe', avatar: 'JD', color: '#1890FF' }
     },
     {
         id: 'INC-2024-008',
-        title: 'False Positive - Normal Traffic Spike',
+        title: 'Báo động giả - Tăng lưu lượng bình thường',
         priority: 'medium',
-        time: '1d ago',
-        source: 'Marketing campaign',
-        target: 'Whitelist added',
+        time: '1 ngày trước',
+        source: 'Chiến dịch marketing',
+        target: 'Đã thêm vào danh sách trắng',
         status: 'resolved',
-        tags: [{ label: 'False Positive', type: 'info' }],
+        tags: [{ label: 'Báo động giả', type: 'info' }],
         assignee: { name: 'Sarah Miller', avatar: 'SM', color: '#52C41A' }
     }
 ];
